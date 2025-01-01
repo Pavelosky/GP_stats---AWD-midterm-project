@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Race Details{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Race Details for {{ race.year }} - {{ race.category }} - Race {{ race.sequence }}</h1>
+  <h2>Results</h2>
+  <ul>
+    {% for result in results %}
+      <li>Rider: {{ result.rider.name }} - Position: {{ result.position }} - Points: {{ result.points }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

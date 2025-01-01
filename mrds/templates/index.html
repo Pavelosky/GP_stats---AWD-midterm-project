@@ -11,5 +11,11 @@
     <li>Discover detailed performance statistics by rider, team, and bike.</li>
     <li>Access powerful and filtered endpoints for custom queries.</li>
   </ul>
+  <h2>Circuits</h2>
+  <ul>
+    {% for circuit in circuits %}
+      <li id="circuit_list"><a href="{% url 'circuit_detail' circuit.id %}">({{ circuit.shortname}})    {{ circuit.circuit_name }} </a></li>
+    {% endfor %}
+  </ul>
 </section>
 {% endblock %}

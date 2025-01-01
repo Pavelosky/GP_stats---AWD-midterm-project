@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ circuit.circuit_name }}{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Races at {{ circuit.circuit_name }}</h1>
+  <ul>
+    {% for race in races %}
+      <li><a href="{% url 'race_detail' race.id %}">{{ race.year }} - {{ race.category }} - Race {{ race.sequence }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

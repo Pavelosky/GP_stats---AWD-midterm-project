@@ -5,10 +5,9 @@ import csv
 from datetime import timedelta
 
 # Set up Django
-sys.path.append("C:/Users/pawel/OneDrive/Documenten/BSc CS UoL/level 6/AWD/mid-term/GP Stats/GP_stats") 
+sys.path.append("C:/Users/pawel/OneDrive/Documenten/BSc CS UoL/level 6/AWD/mid-term/GP_Stats") 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "GP_stats.settings") 
 django.setup()
-
 
 from mrds.models import *
 
@@ -26,6 +25,7 @@ Circuit.objects.all().delete()
 circuits = {}
 riders = {}
 teams = {}
+races = {}
 
 # Open and process the CSV file
 with open(data_file, newline='', encoding='utf-8') as csv_file:
@@ -62,12 +62,17 @@ with open(data_file, newline='', encoding='utf-8') as csv_file:
             teams[team_key] = team
         
         # Handle Race
-        race = Race.objects.create(
-            year=row['year'],
-            category=row['category'],
-            sequence=row['sequence'],
-            circuit=circuits[circuit_key]
-        )
+        race_key = (row['year'], row['category'], row['sequence'])
+        if race_key not in races:
+            race = Race.objects.create(
+                year=row['year'],
+                category=row['category'],
+                sequence=row['sequence'],
+                circuit=circuits[circuit_key]
+            )
+            races[race_key] = race
+        else:
+            race = races[race_key]
         
         # Convert time string to timedelta
         time_str = row['time']
