@@ -4,12 +4,58 @@
 
 {% block content %}
 <section>
-  <h1>Race Details for {{ race.year }} - {{ race.category }} - Race {{ race.sequence }}</h1>
-  <h2>Results</h2>
-  <ul>
-    {% for result in results %}
-      <li>Rider: {{ result.rider.name }} - Position: {{ result.position }} - Points: {{ result.points }}</li>
-    {% endfor %}
-  </ul>
+    <h1>Race Details for {{ race.year }} - {{ race.category }} - Race {{ race.sequence }}</h1>
+    <h2>Results</h2>
+    <ul>
+        <table>
+                <thead>
+                        <tr>
+                                <th>Position</th>
+                                <th>Points</th>
+                                <th>Rider</th>
+                                <th>Team</th>
+                                <th>Time</th>
+                                <th>Speed</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        {% for result in results %}
+                        <tr>
+                                <td>{{ result.position }}</td>
+                                <td>{{ result.points }}</td>
+                                <td>{{ result.rider.name }}</td>
+                                <td>{{ result.team }}</td>
+                                <td>{{ result.time }}</td>
+                                <td>{{ result.speed }}</td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+        </table>
+    </ul>
+    <h2>Add Result</h2>
+    <form method="post" action="{% url 'add_result' race.id %}">
+        {% csrf_token %}
+        <label for="rider">Rider:</label>
+        <select id="rider" name="rider" required>
+            {% for rider in riders %}
+            <option value="{{ rider.id }}">{{ rider.name }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="team">Team:</label>
+        <select id="team" name="team" required>
+            {% for team in teams %}
+            <option value="{{ team.id }}">{{ team.name }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="position">Position:</label>
+        <input type="number" id="position" name="position"><br>
+        <label for="points">Points:</label>
+        <input type="number" id="points" name="points"><br>
+        <label for="time">Time:</label>
+        <input type="text" id="time" name="time"><br>
+        <label for="speed">Speed:</label>
+        <input type="text" id="speed" name="speed"><br>
+        <button type="submit">Add Result</button>
+    </form>
 </section>
 {% endblock %}

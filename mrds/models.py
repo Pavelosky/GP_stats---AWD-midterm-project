@@ -44,7 +44,7 @@ class Result(models.Model):
     position = models.IntegerField(null=True, blank=True)
     points = models.FloatField(null=True, blank=True)
     speed = models.FloatField(null=True, blank=True)
-    time = models.DurationField(null=True, blank=True)
+    time = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return f"Race {self.race} - Rider {self.rider} - Position {self.position}"

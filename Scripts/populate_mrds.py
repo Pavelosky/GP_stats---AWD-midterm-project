@@ -74,27 +74,27 @@ with open(data_file, newline='', encoding='utf-8') as csv_file:
         else:
             race = races[race_key]
         
-        # Convert time string to timedelta
-        time_str = row['time']
-        # Time behind the winner
-        if time_str.startswith('+'):
-            time_str = time_str[1:]
-            if "'" in time_str:
-                minutes, rest = time_str.split("'")
-                seconds, milliseconds = map(float, rest.split('.'))
-                time_delta = timedelta(minutes=int(minutes), seconds=int(seconds), milliseconds=int(milliseconds * 1000))
-            else:
-                seconds, milliseconds = map(float, time_str.split('.'))
-                time_delta = timedelta(seconds=int(seconds), milliseconds=int(milliseconds * 1000))
-        # Rider didn't finish the race
-        elif 'Laps' or 'Lap' in time_str:
-            time_delta = None
-        # Time for the race winner
-        else:
-            time_parts = time_str.split("'")
-            minutes = int(time_parts[0])
-            seconds, milliseconds = map(float, time_parts[1].split('.'))
-            time_delta = timedelta(minutes=minutes, seconds=int(seconds), milliseconds=int(milliseconds * 1000))
+        # # Convert time string to timedelta
+        # time_str = row['time']
+        # # Time behind the winner
+        # if time_str.startswith('+'):
+        #     time_str = time_str[1:]
+        #     if "'" in time_str:
+        #         minutes, rest = time_str.split("'")
+        #         seconds, milliseconds = map(float, rest.split('.'))
+        #         time_delta = timedelta(minutes=int(minutes), seconds=int(seconds), milliseconds=int(milliseconds * 1000))
+        #     else:
+        #         seconds, milliseconds = map(float, time_str.split('.'))
+        #         time_delta = timedelta(seconds=int(seconds), milliseconds=int(milliseconds * 1000))
+        # # Rider didn't finish the race
+        # elif 'Laps' or 'Lap' in time_str:
+        #     time_delta = None
+        # # Time for the race winner
+        # else:
+        #     time_parts = time_str.split("'")
+        #     minutes = int(time_parts[0])
+        #     seconds, milliseconds = map(float, time_parts[1].split('.'))
+        #     time_delta = timedelta(minutes=minutes, seconds=int(seconds), milliseconds=int(milliseconds * 1000))
 
         # Handle missing speed
         speed = row['speed']
@@ -111,7 +111,7 @@ with open(data_file, newline='', encoding='utf-8') as csv_file:
             position=row['position'],
             points=row['points'],
             speed=speed,
-            time=time_delta
+            time=row['time']
         )
 
 print("Database successfully populated!")
