@@ -36,8 +36,14 @@ def add_result(request, race_id):
         team = get_object_or_404(Team, id=request.POST['team'])
         position = request.POST['position']
         points = request.POST['points']
-        time = request.POST['time']
-        speed = request.POST['speed']
+        time = request.POST.get('time', None)
+        speed = request.POST.get('speed', None)
         Result.objects.create(race=race, rider=rider, team=team, position=position, points=points, time=time, speed=speed)
         return redirect('race_detail', race_id=race_id)
+    return redirect('race_detail', race_id=race_id)
+
+def delete_result(request, result_id):
+    result = get_object_or_404(Result, id=result_id)
+    race_id = result.race.id
+    result.delete()
     return redirect('race_detail', race_id=race_id)

@@ -4,58 +4,78 @@
 
 {% block content %}
 <section>
-    <h1>Race Details for {{ race.year }} - {{ race.category }} - Race {{ race.sequence }}</h1>
-    <h2>Results</h2>
-    <ul>
-        <table>
-                <thead>
-                        <tr>
-                                <th>Position</th>
-                                <th>Points</th>
-                                <th>Rider</th>
-                                <th>Team</th>
-                                <th>Time</th>
-                                <th>Speed</th>
-                        </tr>
-                </thead>
-                <tbody>
-                        {% for result in results %}
-                        <tr>
-                                <td>{{ result.position }}</td>
-                                <td>{{ result.points }}</td>
-                                <td>{{ result.rider.name }}</td>
-                                <td>{{ result.team }}</td>
-                                <td>{{ result.time }}</td>
-                                <td>{{ result.speed }}</td>
-                        </tr>
-                        {% endfor %}
-                </tbody>
-        </table>
-    </ul>
-    <h2>Add Result</h2>
-    <form method="post" action="{% url 'add_result' race.id %}">
-        {% csrf_token %}
-        <label for="rider">Rider:</label>
-        <select id="rider" name="rider" required>
-            {% for rider in riders %}
-            <option value="{{ rider.id }}">{{ rider.name }}</option>
-            {% endfor %}
-        </select><br>
-        <label for="team">Team:</label>
-        <select id="team" name="team" required>
-            {% for team in teams %}
-            <option value="{{ team.id }}">{{ team.name }}</option>
-            {% endfor %}
-        </select><br>
-        <label for="position">Position:</label>
-        <input type="number" id="position" name="position"><br>
-        <label for="points">Points:</label>
-        <input type="number" id="points" name="points"><br>
-        <label for="time">Time:</label>
-        <input type="text" id="time" name="time"><br>
-        <label for="speed">Speed:</label>
-        <input type="text" id="speed" name="speed"><br>
-        <button type="submit">Add Result</button>
-    </form>
+  <h1 class="display-4">Race Details for {{ race.year }} - {{ race.category }} - Race {{ race.sequence }}</h1>
+  <h2>Results</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Points</th>
+        <th>Rider</th>
+        <th>Team</th>
+        <th>Time</th>
+        <th>Speed</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in results %}
+      <tr>
+        <td>{{ result.position }}</td>
+        <td>{{ result.points }}</td>
+        <td>{{ result.rider.name }}</td>
+        <td>{{ result.team }}</td>
+        <td>{{ result.time }}</td>
+        <td>{{ result.speed }}</td>
+        <td>
+          <form method="post" action="{% url 'delete_result' result.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="mt-4">
+  <h2>Add Result</h2>
+  <form method="post" action="{% url 'add_result' race.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="rider">Rider:</label>
+      <select class="form-control" id="rider" name="rider" required>
+        {% for rider in riders %}
+        <option value="{{ rider.id }}">{{ rider.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="team">Team:</label>
+      <select class="form-control" id="team" name="team" required>
+        {% for team in teams %}
+        <option value="{{ team.id }}">{{ team.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="position">Position:</label>
+      <input type="number" class="form-control" id="position" name="position" required>
+    </div>
+    <div class="form-group">
+      <label for="points">Points:</label>
+      <input type="number" class="form-control" id="points" name="points" required>
+    </div>
+    <div class="form-group">
+      <label for="time">Time:</label>
+      <input type="text" class="form-control" id="time" name="time">
+    </div>
+    <div class="form-group">
+      <label for="speed">Speed:</label>
+      <input type="text" class="form-control" id="speed" name="speed">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Result</button>
+  </form>
 </section>
 {% endblock %}

@@ -4,17 +4,17 @@
 
 {% block content %}
 <section>
-  <h1>Welcome to the MotoGP RESTful Data Service</h1>
-  <p>Explore race results, rider statistics, and detailed MotoGP insights through our API.</p>
-  <ul>
-    <li>Browse data from MotoGP, Moto2, and Moto3 categories.</li>
-    <li>Discover detailed performance statistics by rider, team, and bike.</li>
-    <li>Access powerful and filtered endpoints for custom queries.</li>
+  <h1 class="display-4">Welcome to the MotoGP RESTful Data Service</h1>
+  <p class="lead">Explore race results, rider statistics, and detailed MotoGP insights through our API.</p>
+  <ul class="list-group">
+    <li class="list-group-item">Browse data from MotoGP, Moto2, and Moto3 categories.</li>
+    <li class="list-group-item">Discover detailed performance statistics by rider, team, and bike.</li>
+    <li class="list-group-item">Access powerful and filtered endpoints for custom queries.</li>
   </ul>
-  <h2>Circuits</h2>
-  <ul>
+  <h2 class="mt-4">Circuits</h2>
+  <ul class="list-group">
     {% for circuit in circuits %}
-      <li id="circuit_list"><a href="{% url 'circuit_detail' circuit.id %}">({{ circuit.shortname}})    {{ circuit.circuit_name }} </a></li>
+      <li class="list-group-item"><a href="{% url 'circuit_detail' circuit.id %}">({{ circuit.shortname }}) {{ circuit.circuit_name }}</a></li>
     {% endfor %}
   </ul>
 </section>

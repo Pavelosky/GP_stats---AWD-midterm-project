@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}MotoGP Data Service{% endblock %}</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
 </head>
 <body>
   {% include 'header.html' %}
 
-  <main>
+  <main class="container mt-4">
     {% block content %}
     <!-- Dynamic content here -->
     {% endblock %}
