@@ -16,4 +16,5 @@ urlpatterns = [
     path('api/edit_race_result/<int:result_id>/', api.edit_race_result, name='edit_race_result'),
     path('api/manufacturer_performance/', api.manufacturer_performance_over_time, name='manufacturer_performance_over_time'),
     path('api/remove_race_results/<int:circuit_id>/', api.remove_race_results_for_circuit, name='remove_race_results_for_circuit'),
+    path('api/list_riders/', api.list_riders, name='list_riders'),
 ]

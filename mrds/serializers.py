@@ -1,5 +1,20 @@
-from rest_framework import serializers # type: ignore
-from .models import Race, Result
+from rest_framework import serializers
+from .models import Circuit, Race, Result, Rider, Team
+
+class CircuitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Circuit
+        fields = '__all__'
+
+class RiderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rider
+        fields = '__all__'
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = '__all__'
 
 class RaceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,3 +25,11 @@ class ResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
         fields = '__all__'
+
+class RiderDetailSerializer(serializers.ModelSerializer):
+    total_points = serializers.FloatField()
+    teams = serializers.ListField(child=serializers.CharField())
+
+    class Meta:
+        model = Rider
+        fields = ['name', 'number', 'country', 'total_points', 'teams']

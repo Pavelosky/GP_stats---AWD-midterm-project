@@ -1,11 +1,11 @@
-from rest_framework.decorators import api_view, permission_classes # type: ignore
-from rest_framework.permissions import AllowAny # type: ignore
-from rest_framework.response import Response # type: ignore
-from rest_framework import status # type: ignore
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg, Sum
 from .models import Circuit, Rider, Team, Race, Result
-from .serializers import RaceSerializer, ResultSerializer
+from .serializers import RaceSerializer, ResultSerializer, RiderDetailSerializer
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -62,3 +62,21 @@ def remove_race_results_for_circuit(request, circuit_id):
         count, _ = results.delete()
         return Response({'deleted': count})
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def list_riders(request):
+    riders = Rider.objects.all()
+    rider_data = []
+    for rider in riders:
+        total_points = Result.objects.filter(rider=rider).aggregate(total_points=Sum('points'))['total_points']
+        teams = Result.objects.filter(rider=rider).values_list('team__name', flat=True).distinct()
+        rider_data.append({
+            'name': rider.name,
+            'number': rider.number,
+            'country': rider.country,
+            'total_points': total_points,
+            'teams': list(teams)
+        })
+    serializer = RiderDetailSerializer(rider_data, many=True)
+    return Response(serializer.data)
