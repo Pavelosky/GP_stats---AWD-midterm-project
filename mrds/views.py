@@ -52,6 +52,7 @@ def riders(request):
     riders = Rider.objects.all()
     rider_teams = {}
     for rider in riders:
-        teams = Result.objects.filter(rider=rider).values_list('team__name', flat=True).distinct()
-        rider_teams[rider.id] = list(teams)
+        if rider.id not in rider_teams:
+            teams = Result.objects.filter(rider=rider).values_list('team__name', flat=True).distinct()
+            rider_teams[rider.id] = list(teams)
     return render(request, 'riders.html', {'riders': riders, 'rider_teams': rider_teams})
