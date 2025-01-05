@@ -5,7 +5,6 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from .models import Circuit, Race, Rider, Team, Result
 
-
 class MRDSTestCase(TestCase):
     def setUp(self):
         self.client = Client()
