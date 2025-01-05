@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "rest_framework",
+    'drf_yasg',
     "mrds.apps.MrdsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
