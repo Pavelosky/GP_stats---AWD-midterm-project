@@ -50,8 +50,11 @@ def delete_result(request, result_id):
 
 def riders(request):
     riders = Rider.objects.all()
-    rider_teams = {}
+    rider_data = []
     for rider in riders:
         teams = Result.objects.filter(rider=rider).values_list('team__name', flat=True).distinct()
-        rider_teams[rider.id] = list(teams)
-    return render(request, 'riders.html', {'riders': riders, 'rider_teams': rider_teams})
+        rider_data.append({
+            'rider': rider,
+            'teams': list(teams)
+        })
+    return render(request, 'riders.html', {'rider_data': rider_data})

@@ -15,14 +15,14 @@
       </tr>
     </thead>
     <tbody>
-      {% for rider in riders %}
+      {% for data in rider_data %}
       <tr>
-        <td>{{ rider.name }}</td>
-        <td>{{ rider.country }}</td>
-        <td>{{ rider.number }}</td>
+        <td>{{ data.rider.name }}</td>
+        <td>{{ data.rider.country }}</td>
+        <td>{{ data.rider.number }}</td>
         <td>
-          {% for result in rider.result_set.all %}
-            {{ result.team.name }}{% if not forloop.last %}, {% endif %}
+          {% for team in data.teams %}
+            {{ team }}{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </td>
       </tr>
