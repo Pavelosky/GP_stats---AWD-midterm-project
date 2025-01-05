@@ -2,17 +2,20 @@ import os
 import sys
 import django
 import csv
+from pathlib import Path
 from datetime import timedelta
 
 # Set up Django
-sys.path.append("C:/Users/pawel/OneDrive/Documenten/BSc CS UoL/level 6/AWD/mid-term/GP_Stats") 
+parent_path = str(Path(__file__).parent.parent)
+
+sys.path.append(parent_path) 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "GP_stats.settings") 
 django.setup()
 
 from mrds.models import *
 
 # Path to the CSV file
-data_file = "motogpresultdataset.csv" 
+data_file = os.path.join(os.path.dirname(__file__), '..', 'motogpresultdataset.csv')
 
 # Clear existing data to avoid duplicates
 Result.objects.all().delete()
