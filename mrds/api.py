@@ -5,7 +5,17 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg, Sum
 from .models import Circuit, Rider, Team, Race, Result
-from .serializers import RaceSerializer, ResultSerializer, RiderDetailSerializer, ResultDetailSerializer
+from .serializers import RaceSerializer, ResultSerializer, RiderDetailSerializer, ResultDetailSerializer, RiderSerializer
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def add_rider(request):
+    if request.method == 'POST':
+        serializer = RiderSerializer(data=request.data)
+        if serializer.is_valid():
+            rider = serializer.save()
+            return Response({'id': rider.id}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
