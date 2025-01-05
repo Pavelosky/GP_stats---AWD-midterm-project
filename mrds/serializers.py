@@ -22,6 +22,9 @@ class RaceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ResultSerializer(serializers.ModelSerializer):
+    rider = serializers.SlugRelatedField(slug_field='name', queryset=Rider.objects.all())
+    team = serializers.SlugRelatedField(slug_field='name', queryset=Team.objects.all())
+
     class Meta:
         model = Result
         fields = '__all__'
@@ -33,3 +36,13 @@ class RiderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rider
         fields = ['name', 'number', 'country', 'total_points', 'teams']
+
+class ResultDetailSerializer(serializers.ModelSerializer):
+    race = RaceSerializer()
+    rider = RiderSerializer()
+    team = TeamSerializer()
+    result_id = serializers.IntegerField(source='id')
+
+    class Meta:
+        model = Result
+        fields = ['result_id', 'race', 'rider', 'team', 'position', 'points', 'time', 'speed']
